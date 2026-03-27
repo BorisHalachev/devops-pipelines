@@ -1,26 +1,24 @@
-name : ci pipeline
+name: ci pipeline
+
 on:
-  push :
-    branches : [ main ]
+  push:
+    branches: [ main ]
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v5
 
-    jobs :
-      build :
-        runs-on : ubuntu-latest
+      - name: Set up Node.js
+        uses: actions/setup-node@v4  # Препоръчвам v4, по-нова е
+        with:
+          node-version: 18          # Node 16 е вече стара, по-добре ползвай 18 или 20
 
-        steps : 
-        -name : checkout code 
-          uses : actions/checkout@v5
+      - name: Install dependencies
+        run: npm install
 
-        -name : Set up Node.js
-           uses: actions/setup-node@v3
-           with :
-           node-version : 16
-
-          -name : Install dependencies
-           run : npm install
-
-
-           -name : Run tests
-            run : npm test
+      - name: Run tests
+        run: npm test
